@@ -6,9 +6,20 @@ import R3fForceGraph, {
   LinkObject,
 } from "r3f-forcegraph";
 
-import React, { useMemo, useState, useRef, useCallback } from "react";
+import React, {
+  useMemo,
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+} from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { TrackballControls } from "@react-three/drei";
+import { Text, TrackballControls } from "@react-three/drei";
+import * as THREE from "three";
+import SpriteText from "three-spritetext";
+import nodes_data from "@/data/nodes";
+import links_data from "@/data/graph_data";
+import { link } from "fs";
 
 interface NodeObject extends BaseNodeObject {
   childLinks?: LinkObject[];
@@ -20,7 +31,6 @@ export default function GraphViz() {
   useFrame(() => fgRef.current?.tickFrame());
 
   const graphData = useMemo(() => genRandomTree(600, true), []);
-
   const rootId = 0;
 
   const nodesById = useMemo(() => {
@@ -67,6 +77,10 @@ export default function GraphViz() {
 
   const [prunedTree, setPrunedTree] = useState(getPrunedTree());
 
+  useEffect(() => {
+    console.log("prunedTree", prunedTree);
+  }, [prunedTree]);
+
   const handleNodeClick = useCallback((node: NodeObject) => {
     node.collapsed = !node.collapsed; // toggle collapse state
     setPrunedTree(getPrunedTree());
@@ -75,12 +89,30 @@ export default function GraphViz() {
   return (
     <R3fForceGraph
       ref={fgRef}
-      graphData={prunedTree}
+      //   graphData={graphData}
+      graphData={links_data}
       linkDirectionalParticles={2}
       linkDirectionalParticleWidth={0.8}
       nodeColor={(node) =>
         !node.childLinks.length ? "green" : node.collapsed ? "red" : "yellow"
       }
+      nodeThreeObject={(node: NodeObject) => {
+        const obj = new THREE.Group();
+        obj.add(
+          new THREE.Mesh(
+            new THREE.SphereGeometry(3, 16, 8),
+            new THREE.MeshBasicMaterial({ color: "white" })
+          )
+        );
+        const sprite = new SpriteText(String(node.name));
+        sprite.color = "white";
+        // sprite.fontSize = 8;
+        sprite.textHeight = 6;
+        sprite.position.set(0, 8, 0); // Move text up 5 units in y-axis
+        obj.add(sprite);
+        return obj;
+      }}
+      linkThreeObjectExtend={true}
       onNodeClick={handleNodeClick}
     />
   );
