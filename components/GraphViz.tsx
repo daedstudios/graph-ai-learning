@@ -14,7 +14,7 @@ import React, {
   useEffect,
 } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Text, TrackballControls } from "@react-three/drei";
+import { Text, TrackballControls, CameraControls } from "@react-three/drei";
 import * as THREE from "three";
 import SpriteText from "three-spritetext";
 import nodes_data from "@/data/nodes";
@@ -29,6 +29,11 @@ interface NodeObject extends BaseNodeObject {
 export default function GraphViz() {
   const fgRef = useRef<GraphMethods | undefined>(undefined);
   useFrame(() => fgRef.current?.tickFrame());
+
+  const cameraRef = useRef<any>(null);
+  const [highlightNodes, setHighlightNodes] = useState(new Set());
+  const [highlightLinks, setHighlightLinks] = useState(new Set());
+  const [hoverNode, setHoverNode] = useState<NodeObject | null>(null);
 
   const graphData = useMemo(() => genRandomTree(600, true), []);
   const rootId = 0;
@@ -83,38 +88,84 @@ export default function GraphViz() {
 
   const handleNodeClick = useCallback((node: NodeObject) => {
     node.collapsed = !node.collapsed; // toggle collapse state
-    setPrunedTree(getPrunedTree());
+    console.log("node", node);
+    // setPrunedTree(getPrunedTree());
+    cameraRef.current?.setLookAt(0, 0, 0, node.x, node.y, node.z, true);
+
+    const distance = 40;
   }, []);
 
-  return (
-    <R3fForceGraph
-      ref={fgRef}
-      //   graphData={graphData}
-      graphData={links_data}
-      linkDirectionalParticles={2}
-      linkDirectionalParticleWidth={0.8}
-      nodeColor={(node) =>
-        !node.childLinks.length ? "green" : node.collapsed ? "red" : "yellow"
+  const handleNodeHover = (
+    node: NodeObject | null,
+    prevNode: NodeObject | null
+  ) => {
+    console.log("node", node);
+    highlightNodes.clear();
+    highlightLinks.clear();
+    if (node) {
+      highlightNodes.add(node);
+
+      if (node.neighbors) {
+        node.neighbors.forEach((neighbor: NodeObject) => {
+          console.log("neighbor", neighbor); // Add this line to log the neighbor;
+          highlightNodes.add(neighbor);
+        });
       }
-      nodeThreeObject={(node: NodeObject) => {
-        const obj = new THREE.Group();
-        obj.add(
-          new THREE.Mesh(
-            new THREE.SphereGeometry(3, 16, 8),
-            new THREE.MeshBasicMaterial({ color: "white" })
-          )
-        );
-        const sprite = new SpriteText(String(node.name));
-        sprite.color = "white";
-        // sprite.fontSize = 8;
-        sprite.textHeight = 6;
-        sprite.position.set(0, 8, 0); // Move text up 5 units in y-axis
-        obj.add(sprite);
-        return obj;
-      }}
-      linkThreeObjectExtend={true}
-      onNodeClick={handleNodeClick}
-    />
+      if (node.links) {
+        node.links.forEach((link: LinkObject) => highlightLinks.add(link));
+      }
+    }
+    setHoverNode(node);
+  };
+
+  useEffect(() => {
+    console.log("highlightNodes", highlightNodes);
+  }, [hoverNode]);
+
+  return (
+    <>
+      <R3fForceGraph
+        ref={fgRef}
+        //   graphData={graphData}
+        graphData={links_data}
+        linkDirectionalParticles={2}
+        linkDirectionalParticleWidth={0.8}
+        nodeColor={(node) =>
+          !node.childLinks.length ? "green" : node.collapsed ? "red" : "yellow"
+        }
+        nodeThreeObject={(node: NodeObject) => {
+          const obj = new THREE.Group();
+          let color = "white";
+          let scale = 3;
+          if (highlightNodes.has(node)) {
+            color = "gray";
+            scale = 4;
+          }
+          obj.add(
+            new THREE.Mesh(
+              new THREE.SphereGeometry(scale, 16, 8),
+              new THREE.MeshBasicMaterial({ color: color })
+            )
+          );
+          const sprite = new SpriteText(String(node.name));
+          sprite.color = "white";
+          // sprite.fontSize = 8;
+          sprite.textHeight = 6;
+          sprite.position.set(0, 8, 0); // Move text up 5 units in y-axis
+          obj.add(sprite);
+          return obj;
+        }}
+        onNodeHover={handleNodeHover}
+        // onNodeDragEnd={(node) => {
+        //   node.fx = node.x;
+        //   node.fy = node.y;
+        //   node.fz = node.z;
+        // }}
+        linkThreeObjectExtend={true}
+        onNodeClick={handleNodeClick}
+      />
+      <CameraControls makeDefault ref={cameraRef} />
+    </>
   );
 }
 
