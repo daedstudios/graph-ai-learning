@@ -4,7 +4,15 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { TrackballControls, OrbitControls } from "@react-three/drei";
 import GraphViz from "@/components/GraphViz";
 
-export default function GraphScene() {
+interface GraphSceneProps {
+  selectedPoint: any;
+  setSelectedPoint: (point: { id: string | number; name: string }) => void;
+}
+
+export default function GraphScene({
+  selectedPoint,
+  setSelectedPoint,
+}: GraphSceneProps) {
   return (
     <Canvas flat camera={{ position: [0, 0, 180], far: 5000 }}>
       {/* <TrackballControls /> */}
@@ -12,7 +20,10 @@ export default function GraphScene() {
       <ambientLight color={0xcccccc} intensity={Math.PI} />
       <directionalLight intensity={0.6 * Math.PI} />
       <OrbitControls />
-      <GraphViz />
+      <GraphViz
+        selectedPoint={selectedPoint}
+        setSelectedPoint={setSelectedPoint}
+      />
     </Canvas>
   );
 }
