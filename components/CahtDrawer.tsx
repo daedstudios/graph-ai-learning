@@ -26,12 +26,20 @@ const ChatDrawer = () => {
   return (
     <Drawer modal={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button
-          className="w-full bg-destructive dark:bg-secondary text-primary text-[1rem] hover:text-foreground dark:hover:bg-background dark:text-card-foreground"
-          onClick={() => setOpen(!open)}
-        >
-          chat
-        </Button>
+        <div className="flex flex-row  w-full justify-between">
+          <Button
+            className="w-[7.5rem] bg-primary dark:bg-secondary text-secondary text-[1rem] dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
+            onClick={() => setOpen(!open)}
+          >
+            learn more
+          </Button>
+          <Button
+            className=" w-[7.5rem] bg-secondary dark:bg-primary border border-primary text-primary text-[1rem] hover:text-secondary dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
+            onClick={() => setOpen(!open)}
+          >
+            tasks
+          </Button>
+        </div>
       </DrawerTrigger>
       <DrawerContent className="top-0 min-h-screen">
         <ScrollArea className="w-full overflow-y-auto flex flex-wrap justify-center mt-3">

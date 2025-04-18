@@ -31,7 +31,7 @@ export default function Page() {
     if (selectedPoint && cardRef.current) {
       gsap.to(cardRef.current, {
         duration: 0.5,
-        width: "auto",
+        width: "18rem",
         height: "auto",
         opacity: 1,
       });
@@ -47,10 +47,20 @@ export default function Page() {
         />
       </div>
       <Card
-        className="fixed top-12 left-12 w-0 h-0 overflow-hidden"
+        className="flex flex-col p-4 items-center text-left rounded-[2rem] fixed top-24 left-24 h-0 overflow-hidden w-[18rem]"
         ref={cardRef}
       >
-        {selectedPoint?.name}
+        <h1 className="text-[1rem] w-full font-medium text-left">
+          {selectedPoint?.name}
+        </h1>
+        <p className="text-[0.75rem] pb-[5rem]">
+          In JavaScript, numbers are a data type used to represent both integers
+          and floating-point values. They can be manipulated using various
+          operators and functions. JavaScript supports special numeric values
+          like NaN (Not a Number) and Infinity. You can perform arithmetic
+          operations, comparisons, and use methods like Math.round() or
+          Math.random() to work with numbers effectively.
+        </p>
         <ChatDrawer />
       </Card>
     </>
