@@ -21,12 +21,21 @@ import nodes_data from "@/data/nodes";
 import links_data from "@/data/graph_data";
 import { link } from "fs";
 
+
 interface NodeObject extends BaseNodeObject {
   childLinks?: LinkObject[];
   collapsed?: boolean;
 }
 
-export default function GraphViz() {
+interface GraphVizProps {
+  selectedPoint: any;
+  setSelectedPoint: (point: { id: number | string; name: string }) => void;
+}
+
+export default function GraphViz({
+  selectedPoint,
+  setSelectedPoint,
+}: GraphVizProps) {
   const fgRef = useRef<GraphMethods | undefined>(undefined);
   useFrame(() => fgRef.current?.tickFrame());
 
@@ -80,15 +89,11 @@ export default function GraphViz() {
     return { nodes: visibleNodes, links: visibleLinks };
   }, [nodesById]);
 
-  const [prunedTree, setPrunedTree] = useState(getPrunedTree());
-
-  useEffect(() => {
-    console.log("prunedTree", prunedTree);
-  }, [prunedTree]);
-
   const handleNodeClick = useCallback((node: NodeObject) => {
-    node.collapsed = !node.collapsed; // toggle collapse state
     console.log("node", node);
+    if (node.id !== undefined) {
+      setSelectedPoint({ id: node.id, name: node.name as string });
+    }
     // setPrunedTree(getPrunedTree());
     cameraRef.current?.setLookAt(0, 0, 0, node.x, node.y, node.z, true);
 
@@ -135,10 +140,10 @@ export default function GraphViz() {
         }
         nodeThreeObject={(node: NodeObject) => {
           const obj = new THREE.Group();
-          let color = "white";
+          let color = "gray";
           let scale = 3;
           if (highlightNodes.has(node)) {
-            color = "gray";
+            color = "white";
             scale = 4;
           }
           obj.add(
@@ -148,9 +153,9 @@ export default function GraphViz() {
             )
           );
           const sprite = new SpriteText(String(node.name));
-          sprite.color = "white";
+          sprite.color = color;
           // sprite.fontSize = 8;
-          sprite.textHeight = 6;
+          sprite.textHeight = scale * 2;
           sprite.position.set(0, 8, 0); // Move text up 5 units in y-axis
           obj.add(sprite);
           return obj;
@@ -163,6 +168,7 @@ export default function GraphViz() {
         // }}
         linkThreeObjectExtend={true}
         onNodeClick={handleNodeClick}
+        // enableNodeDrag={true}
       />
       <CameraControls makeDefault ref={cameraRef} />
     </>
