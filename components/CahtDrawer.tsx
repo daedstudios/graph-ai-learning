@@ -26,7 +26,7 @@ const ChatDrawer = () => {
   return (
     <Drawer modal={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <div className="flex flex-row  w-full justify-between">
+        <div className="flex flex-row w-full gap-4 justify-end">
           <Button
             className="w-[7.5rem] bg-primary dark:bg-secondary text-secondary text-[1rem] dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
             onClick={() => setOpen(!open)}
