@@ -29,9 +29,11 @@ export default function Page() {
 
   useEffect(() => {
     if (selectedPoint && cardRef.current) {
+      const isMobile = window.innerWidth < 768; // Tailwind's md breakpoint
+
       gsap.to(cardRef.current, {
         duration: 0.5,
-        width: "18rem",
+        width: isMobile ? "full" : "18rem",
         height: "auto",
         opacity: 1,
       });
@@ -46,14 +48,15 @@ export default function Page() {
           setSelectedPoint={setSelectedPoint}
         />
       </div>
+
       <Card
-        className="flex flex-col p-4 items-center text-left rounded-[2rem] fixed top-24 left-24 h-0 overflow-hidden w-[18rem]"
+        className="fixed bottom-48 left-1/2 -translate-x-1/2 w-[90%] md:left-24 md:translate-x-0 md:w-[18rem] p-4 rounded-[2rem]  flex flex-col items-start h-0 text-left overflow-hidden"
         ref={cardRef}
       >
         <h1 className="text-[1rem] w-full font-medium text-left">
           {selectedPoint?.name}
         </h1>
-        <p className="text-[0.75rem] pb-[5rem]">
+        <p className="text-[0.75rem] w-full pb-[0rem]">
           In JavaScript, numbers are a data type used to represent both integers
           and floating-point values. They can be manipulated using various
           operators and functions. JavaScript supports special numeric values
