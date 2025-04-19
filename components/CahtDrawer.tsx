@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "./ui/scroll-area";
+import { useChat } from "@ai-sdk/react";
 
 type Props = {
   selectedCountry: string;
@@ -23,6 +24,9 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const ChatDrawer = () => {
   const [open, setOpen] = React.useState(false);
+
+  const { messages, input, handleInputChange, handleSubmit, error } = useChat();
+
   return (
     <Drawer modal={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
@@ -53,16 +57,30 @@ const ChatDrawer = () => {
               </DrawerDescription>
             </div>
           </DrawerHeader>
-          <div className="flex flex-col flex-wrap gap-8 justify-center align-middle items-center w-[100%] lg:w-[50%] p-8 border-t-2 mt-4 border-r-2 mx-auto">
-            <h2 className="w-full text-3xl font-semibold text-card-foreground text-center">
-              topic name
-            </h2>
-          </div>
-          <div className="flex flex-col flex-wrap gap-8 justify-center align-middle items-center w-[100%] lg:w-[50%] p-8 border-t-2 mt-4 border-r-2 mx-auto">
-            <h2 className="w-full text-3xl font-semibold text-card-foreground text-center">
-              details
-            </h2>
-          </div>
+          {
+            <div>
+              {messages.map((message) =>
+                message.parts.map((part, i) => {
+                  switch (part.type) {
+                    case "text":
+                      return <p key={i}>{part.text}</p>;
+                    case "source":
+                      return <p key={i}>{part.source.url}</p>;
+                    case "reasoning":
+                      return <div key={i}>{part.reasoning}</div>;
+                    case "tool-invocation":
+                      return <div key={i}>{part.toolInvocation.toolName}</div>;
+                    case "file":
+                      return <div key={i}>image</div>;
+                  }
+                })
+              )}
+            </div>
+          }
+          <form onSubmit={handleSubmit}>
+            <input name="prompt" value={input} onChange={handleInputChange} />
+            <button type="submit">Submit</button>
+          </form>
           <DrawerFooter className="w-full border-t">
             <DrawerClose>
               <Button className="w-[80%]">Close popup</Button>
