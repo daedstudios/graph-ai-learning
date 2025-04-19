@@ -17,10 +17,8 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Text, TrackballControls, CameraControls } from "@react-three/drei";
 import * as THREE from "three";
 import SpriteText from "three-spritetext";
-import nodes_data from "@/data/nodes";
 import links_data from "@/data/graph_data";
 import { link } from "fs";
-
 
 interface NodeObject extends BaseNodeObject {
   childLinks?: LinkObject[];
@@ -29,7 +27,11 @@ interface NodeObject extends BaseNodeObject {
 
 interface GraphVizProps {
   selectedPoint: any;
-  setSelectedPoint: (point: { id: number | string; name: string }) => void;
+  setSelectedPoint: (point: {
+    id: number | string;
+    name: string;
+    description: string;
+  }) => void;
 }
 
 export default function GraphViz({
@@ -92,7 +94,11 @@ export default function GraphViz({
   const handleNodeClick = useCallback((node: NodeObject) => {
     console.log("node", node);
     if (node.id !== undefined) {
-      setSelectedPoint({ id: node.id, name: node.name as string });
+      setSelectedPoint({
+        id: node.id,
+        name: node.name as string,
+        description: node.description,
+      });
     }
     // setPrunedTree(getPrunedTree());
     cameraRef.current?.setLookAt(0, 0, 0, node.x, node.y, node.z, true);

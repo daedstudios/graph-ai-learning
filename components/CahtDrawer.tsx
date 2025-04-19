@@ -15,14 +15,13 @@ import { ScrollArea } from "./ui/scroll-area";
 import { useChat } from "@ai-sdk/react";
 
 type Props = {
-  selectedCountry: string;
-  isParentOpen: boolean;
-  setIsParentOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  topic: string;
+  description: string;
 };
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-const ChatDrawer = () => {
+const ChatDrawer = ({ topic, description }: Props) => {
   const [open, setOpen] = React.useState(false);
 
   const { messages, input, handleInputChange, handleSubmit, error } = useChat();
@@ -45,24 +44,16 @@ const ChatDrawer = () => {
           </Button>
         </div>
       </DrawerTrigger>
-      <DrawerContent className="top-0  min-h-screen">
-        <ScrollArea className="md:w-[42rem] w-[90%] justify-center mx-auto overflow-y-auto flex flex-wrap items-center mt-3">
-          <DrawerHeader className="w-full flex  gap-2">
-            <div className="">
-              <DrawerTitle className="text-[2rem] justify-start text-left font-medium">
-                let's learn about topic
-              </DrawerTitle>
-              <DrawerDescription className="text-primary pt-4 text-[1rem]">
-                In JavaScript, numbers are a data type used to represent both
-                integers and floating-point values. They can be manipulated
-                using various operators and functions. JavaScript supports
-                special numeric values like NaN (Not a Number) and Infinity. You
-                can perform arithmetic operations, comparisons, and use methods
-                like Math.round() or Math.random() to work with numbers
-                effectively.
-              </DrawerDescription>
-            </div>
-          </DrawerHeader>
+      <DrawerContent className="top-0  min-h-screen h-auto">
+        <DrawerHeader className=" flex  gap-2 md:w-[42rem] w-[90%] mx-auto">
+          <DrawerTitle className="text-[2rem] justify-start text-left font-medium">
+            let's learn about {topic}
+          </DrawerTitle>
+          <DrawerDescription className="text-primary pt-4 text-[1rem]">
+            {description}
+          </DrawerDescription>
+        </DrawerHeader>
+        <ScrollArea className="md:w-[42rem] w-[90%] mb-40 mx-auto overflow-y-auto mt-3">
           {
             <div className="h-auto w-full p-4">
               {messages.map((message) =>
@@ -101,7 +92,63 @@ const ChatDrawer = () => {
               ask
             </button>
           </form>
-          <div className="flex  px-4 items-start flex-row w-full gap-4 ">
+          {/* <p>
+            In JavaScript, numbers are a data type used to represent both
+            integers and floating-point values. They can be manipulated using
+            various operators and functions. JavaScript supports special numeric
+            values like NaN (Not a Number) and Infinity. You can perform
+            arithmetic operations, comparisons, and use methods like
+            Math.round() or Math.random() to work with numbers effectively.
+          </p>
+          <p>
+            In JavaScript, numbers are a data type used to represent both
+            integers and floating-point values. They can be manipulated using
+            various operators and functions. JavaScript supports special numeric
+            values like NaN (Not a Number) and Infinity. You can perform
+            arithmetic operations, comparisons, and use methods like
+            Math.round() or Math.random() to work with numbers effectively.
+          </p>
+          <p>
+            In JavaScript, numbers are a data type used to represent both
+            integers and floating-point values. They can be manipulated using
+            various operators and functions. JavaScript supports special numeric
+            values like NaN (Not a Number) and Infinity. You can perform
+            arithmetic operations, comparisons, and use methods like
+            Math.round() or Math.random() to work with numbers effectively.
+          </p>
+          <p>
+            In JavaScript, numbers are a data type used to represent both
+            integers and floating-point values. They can be manipulated using
+            various operators and functions. JavaScript supports special numeric
+            values like NaN (Not a Number) and Infinity. You can perform
+            arithmetic operations, comparisons, and use methods like
+            Math.round() or Math.random() to work with numbers effectively.
+          </p>
+          <p>
+            In JavaScript, numbers are a data type used to represent both
+            integers and floating-point values. They can be manipulated using
+            various operators and functions. JavaScript supports special numeric
+            values like NaN (Not a Number) and Infinity. You can perform
+            arithmetic operations, comparisons, and use methods like
+            Math.round() or Math.random() to work with numbers effectively.
+          </p>
+          <p>
+            In JavaScript, numbers are a data type used to represent both
+            integers and floating-point values. They can be manipulated using
+            various operators and functions. JavaScript supports special numeric
+            values like NaN (Not a Number) and Infinity. You can perform
+            arithmetic operations, comparisons, and use methods like
+            Math.round() or Math.random() to work with numbers effectively.
+          </p>
+          <p>
+            In JavaScript, numbers are a data type used to represent both
+            integers and floating-point values. They can be manipulated using
+            various operators and functions. JavaScript supports special numeric
+            values like NaN (Not a Number) and Infinity. You can perform
+            arithmetic operations, comparisons, and use methods like
+            Math.round() or Math.random() to work with numbers effectively.
+          </p> */}
+          <div className="flex items-start flex-row w-full gap-4 ">
             <Button
               className=" w-[7.5rem] bg-secondary dark:bg-primary border border-primary text-primary text-[1rem] hover:text-secondary dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
               onClick={() => setOpen(!open)}
