@@ -30,7 +30,7 @@ const ChatDrawer = () => {
   return (
     <Drawer modal={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <div className="flex flex-row w-full gap-4 justify-end">
+        <div className="flex flex-row w-full gap-4 justify-end ">
           <Button
             className="w-[7.5rem] bg-primary dark:bg-secondary text-secondary text-[1rem] dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
             onClick={() => setOpen(!open)}
@@ -45,20 +45,26 @@ const ChatDrawer = () => {
           </Button>
         </div>
       </DrawerTrigger>
-      <DrawerContent className="top-0 min-h-screen">
-        <ScrollArea className="w-full overflow-y-auto flex flex-wrap justify-center mt-3">
-          <DrawerHeader className="w-full flex items-center gap-2">
-            <div>
-              <DrawerTitle className="text-4xl">
-                deatled AI tutorial
+      <DrawerContent className="top-0  min-h-screen">
+        <ScrollArea className="md:w-[42rem] w-[90%] justify-center mx-auto overflow-y-auto flex flex-wrap items-center mt-3">
+          <DrawerHeader className="w-full flex  gap-2">
+            <div className="">
+              <DrawerTitle className="text-[2rem] justify-start text-left font-medium">
+                let's learn about topic
               </DrawerTitle>
-              <DrawerDescription className="text-base">
-                see details of the topic and do exercises.
+              <DrawerDescription className="text-primary pt-4 text-[1rem]">
+                In JavaScript, numbers are a data type used to represent both
+                integers and floating-point values. They can be manipulated
+                using various operators and functions. JavaScript supports
+                special numeric values like NaN (Not a Number) and Infinity. You
+                can perform arithmetic operations, comparisons, and use methods
+                like Math.round() or Math.random() to work with numbers
+                effectively.
               </DrawerDescription>
             </div>
           </DrawerHeader>
           {
-            <div>
+            <div className="h-auto w-full p-4">
               {messages.map((message) =>
                 message.parts.map((part, i) => {
                   switch (part.type) {
@@ -77,15 +83,38 @@ const ChatDrawer = () => {
               )}
             </div>
           }
-          <form onSubmit={handleSubmit}>
-            <input name="prompt" value={input} onChange={handleInputChange} />
-            <button type="submit">Submit</button>
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-wrap gap-4 items-center justify-between  p-4 mx-auto"
+          >
+            <textarea
+              className="border-none focus:outline-none py-[0.5rem] md:w-[16rem] w-full "
+              name="prompt"
+              value={input}
+              placeholder="ask a question..."
+              onChange={handleInputChange}
+            />
+            <button
+              className="md:w-[7.25rem] w-full hover:bg-foreground border py-[0.5rem] bg-primary text-secondary cursor-pointer rounded-[2rem]"
+              type="submit"
+            >
+              ask
+            </button>
           </form>
-          <DrawerFooter className="w-full border-t">
-            <DrawerClose>
-              <Button className="w-[80%]">Close popup</Button>
-            </DrawerClose>
-          </DrawerFooter>
+          <div className="flex  px-4 items-start flex-row w-full gap-4 ">
+            <Button
+              className=" w-[7.5rem] bg-secondary dark:bg-primary border border-primary text-primary text-[1rem] hover:text-secondary dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
+              onClick={() => setOpen(!open)}
+            >
+              more info
+            </Button>
+            <Button
+              className=" w-[7.5rem]  bg-secondary dark:bg-primary border border-primary text-primary text-[1rem] hover:text-secondary dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
+              onClick={() => setOpen(!open)}
+            >
+              topics
+            </Button>
+          </div>
         </ScrollArea>
       </DrawerContent>
     </Drawer>
