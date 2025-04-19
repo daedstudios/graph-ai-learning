@@ -6,7 +6,11 @@ import GraphViz from "@/components/GraphViz";
 
 interface GraphSceneProps {
   selectedPoint: any;
-  setSelectedPoint: (point: { id: string | number; name: string }) => void;
+  setSelectedPoint: (point: {
+    id: string | number;
+    name: string;
+    description: string;
+  }) => void;
 }
 
 export default function GraphScene({

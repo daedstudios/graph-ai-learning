@@ -18,7 +18,7 @@ const Scene = dynamic(() => import("@/components/GraphScene"), {
 
 export default function Page() {
   const [selectedPoint, setSelectedPoint] = useState<
-    { id: string | number; name: string } | undefined
+    { id: string | number; name: string; description: string } | undefined
   >(undefined);
 
   useEffect(() => {
@@ -57,14 +57,12 @@ export default function Page() {
           {selectedPoint?.name}
         </h1>
         <p className="text-[0.75rem] w-full pb-[0rem]">
-          In JavaScript, numbers are a data type used to represent both integers
-          and floating-point values. They can be manipulated using various
-          operators and functions. JavaScript supports special numeric values
-          like NaN (Not a Number) and Infinity. You can perform arithmetic
-          operations, comparisons, and use methods like Math.round() or
-          Math.random() to work with numbers effectively.
+          {selectedPoint?.description}
         </p>
-        <ChatDrawer />
+        <ChatDrawer
+          topic={selectedPoint?.name || ""}
+          description={selectedPoint?.description || ""}
+        />
       </Card>
     </>
   );
