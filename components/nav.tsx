@@ -14,8 +14,8 @@ export default function Nav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed z-50 bottom-0 w-full md:top-0 md:left-0 md:h-screen md:w-auto bg-background ">
-      <ul className="flex md:justify-start justify-between mx-auto w-[90%] md:px-4 items-center md:flex-col md:items-center h-full p-6 gap-6">
+    <nav className="fixed z-50 bottom-0 w-full md:top-0 md:left-0 md:h-screen md:w-auto bg-background">
+      <ul className="flex md:justify-start justify-between mx-auto w-[90%] md:px-4 items-center md:flex-col md:items-center h-full p-5 gap-6">
         {navItems.map(({ href, icon, label }) => (
           <li key={href}>
             <Link

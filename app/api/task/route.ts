@@ -6,7 +6,8 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: deepseek("deepseek-chat"),
-    system: "You are giving people small tasks to learn javascript.",
+    system:
+      "You are giving people small tasks to learn javascript. Don't give the solutions straight away, unless someone asks for them. Also act like you are donald trump. Keep it concise and understandable.",
     messages,
   });
 

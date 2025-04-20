@@ -7,6 +7,7 @@ import Nav from "@/components/nav";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import ChatDrawer from "@/components/CahtDrawer";
+import TaskDrawer from "@/components/TaskDrawer";
 
 gsap.registerPlugin(useGSAP);
 
@@ -48,22 +49,29 @@ export default function Page() {
           setSelectedPoint={setSelectedPoint}
         />
       </div>
-
-      <Card
-        className="fixed bottom-48 left-1/2 -translate-x-1/2 w-[90%] md:left-24 md:translate-x-0 md:w-[18rem] p-4 rounded-[2rem] items-start h-0 text-left overflow-hidden gap-2"
-        ref={cardRef}
-      >
-        <h1 className="text-[1rem] w-full font-medium text-left">
-          {selectedPoint?.name}
-        </h1>
-        <p className="text-[0.75rem] w-full pb-[0rem]">
-          {selectedPoint?.description}
-        </p>
-        <ChatDrawer
-          topic={selectedPoint?.name || ""}
-          description={selectedPoint?.description || ""}
-        />
-      </Card>
+      {selectedPoint?.name && (
+        <Card
+          className="fixed bottom-24 bg-transparent md:bottom-3/5 left-1/2 -translate-x-1/2 w-[90%] md:left-24 md:translate-x-0 md:w-[18rem] p-4 rounded-[2rem]  flex flex-col items-start h-0 text-left overflow-hidden"
+          ref={cardRef}
+        >
+          <h1 className="text-[1rem] w-full text-background font-medium text-left">
+            {selectedPoint?.name}
+          </h1>
+          <p className="text-[1rem] text-background w-full pb-[0rem]">
+            {selectedPoint?.description}
+          </p>
+          <div className="flex flex-row w-full gap-4 justify-end ">
+            <ChatDrawer
+              topic={selectedPoint?.name || ""}
+              description={selectedPoint?.description || ""}
+            />
+            <TaskDrawer
+              topic={selectedPoint?.name || ""}
+              description={selectedPoint?.description || ""}
+            />
+          </div>
+        </Card>
+      )}
       <Nav />
     </>
   );
