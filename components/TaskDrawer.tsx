@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
+import ReactMarkdown from "react-markdown";
 import {
   Drawer,
   DrawerClose,
@@ -31,25 +32,17 @@ const TaskDrawer = ({ topic, description }: Props) => {
   return (
     <Drawer modal={false} open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <div className="flex flex-row w-full gap-4 justify-end ">
-          <Button
-            className="w-[7.5rem] bg-primary dark:bg-secondary  hover:bg-muted-foreground hover:text-background text-secondary text-[1rem] dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
-            onClick={() => setOpen(!open)}
-          >
-            learn more
-          </Button>
-          <Button
-            className=" w-[7.5rem] bg-secondary border-muted-foreground dark:bg-primary border  text-primary text-[1rem] hover:bg-muted-foreground hover:text-background dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
-            onClick={() => setOpen(!open)}
-          >
-            tasks
-          </Button>
-        </div>
+        <Button
+          className=" w-[7.5rem] bg-secondary border-muted-foreground dark:bg-primary border  text-primary text-[1rem] hover:bg-muted-foreground hover:text-background dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
+          onClick={() => setOpen(!open)}
+        >
+          tasks
+        </Button>
       </DrawerTrigger>
       <DrawerContent className="top-0  min-h-screen h-auto">
         <DrawerHeader className=" flex  gap-2 md:w-[42rem] w-[90%] mx-auto">
           <DrawerTitle className="text-[2rem] justify-start text-left font-medium">
-            let's learn about {topic}
+            {topic} task
           </DrawerTitle>
           <DrawerDescription className="text-primary pt-4 text-[1rem]">
             {description}
@@ -62,7 +55,27 @@ const TaskDrawer = ({ topic, description }: Props) => {
                 message.parts.map((part, i) => {
                   switch (part.type) {
                     case "text":
-                      return <p key={i}>{part.text}</p>;
+                      return (
+                        <ReactMarkdown
+                          key={i}
+                          components={{
+                            pre: ({ children }) => (
+                              <pre className="overflow-auto rounded-md bg-foreground text-background text-sm p-4 my-4 max-w-full">
+                                {children}
+                              </pre>
+                            ),
+                            code: ({ className, children }) => (
+                              <code
+                                className={`${className} break-words whitespace-pre-wrap`}
+                              >
+                                {children}
+                              </code>
+                            ),
+                          }}
+                        >
+                          {part.text}
+                        </ReactMarkdown>
+                      );
                     case "source":
                       return <p key={i}>{part.source.url}</p>;
                     case "reasoning":
