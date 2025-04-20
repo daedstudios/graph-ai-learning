@@ -31,13 +31,13 @@ const ChatDrawer = ({ topic, description }: Props) => {
       <DrawerTrigger asChild>
         <div className="flex flex-row w-full gap-4 justify-end ">
           <Button
-            className="w-[7.5rem] bg-primary dark:bg-secondary text-secondary text-[1rem] dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
+            className="w-[7.5rem] bg-primary dark:bg-secondary  hover:bg-muted-foreground hover:text-background text-secondary text-[1rem] dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
             onClick={() => setOpen(!open)}
           >
             learn more
           </Button>
           <Button
-            className=" w-[7.5rem] bg-secondary dark:bg-primary border border-primary text-primary text-[1rem] hover:text-secondary dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
+            className=" w-[7.5rem] bg-secondary border-muted-foreground dark:bg-primary border  text-primary text-[1rem] hover:bg-muted-foreground hover:text-background dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
             onClick={() => setOpen(!open)}
           >
             tasks
@@ -92,71 +92,16 @@ const ChatDrawer = ({ topic, description }: Props) => {
               ask
             </button>
           </form>
-          {/* <p>
-            In JavaScript, numbers are a data type used to represent both
-            integers and floating-point values. They can be manipulated using
-            various operators and functions. JavaScript supports special numeric
-            values like NaN (Not a Number) and Infinity. You can perform
-            arithmetic operations, comparisons, and use methods like
-            Math.round() or Math.random() to work with numbers effectively.
-          </p>
-          <p>
-            In JavaScript, numbers are a data type used to represent both
-            integers and floating-point values. They can be manipulated using
-            various operators and functions. JavaScript supports special numeric
-            values like NaN (Not a Number) and Infinity. You can perform
-            arithmetic operations, comparisons, and use methods like
-            Math.round() or Math.random() to work with numbers effectively.
-          </p>
-          <p>
-            In JavaScript, numbers are a data type used to represent both
-            integers and floating-point values. They can be manipulated using
-            various operators and functions. JavaScript supports special numeric
-            values like NaN (Not a Number) and Infinity. You can perform
-            arithmetic operations, comparisons, and use methods like
-            Math.round() or Math.random() to work with numbers effectively.
-          </p>
-          <p>
-            In JavaScript, numbers are a data type used to represent both
-            integers and floating-point values. They can be manipulated using
-            various operators and functions. JavaScript supports special numeric
-            values like NaN (Not a Number) and Infinity. You can perform
-            arithmetic operations, comparisons, and use methods like
-            Math.round() or Math.random() to work with numbers effectively.
-          </p>
-          <p>
-            In JavaScript, numbers are a data type used to represent both
-            integers and floating-point values. They can be manipulated using
-            various operators and functions. JavaScript supports special numeric
-            values like NaN (Not a Number) and Infinity. You can perform
-            arithmetic operations, comparisons, and use methods like
-            Math.round() or Math.random() to work with numbers effectively.
-          </p>
-          <p>
-            In JavaScript, numbers are a data type used to represent both
-            integers and floating-point values. They can be manipulated using
-            various operators and functions. JavaScript supports special numeric
-            values like NaN (Not a Number) and Infinity. You can perform
-            arithmetic operations, comparisons, and use methods like
-            Math.round() or Math.random() to work with numbers effectively.
-          </p>
-          <p>
-            In JavaScript, numbers are a data type used to represent both
-            integers and floating-point values. They can be manipulated using
-            various operators and functions. JavaScript supports special numeric
-            values like NaN (Not a Number) and Infinity. You can perform
-            arithmetic operations, comparisons, and use methods like
-            Math.round() or Math.random() to work with numbers effectively.
-          </p> */}
-          <div className="flex items-start flex-row w-full gap-4 ">
+
+          <div className="flex items-start px-4 flex-row w-full gap-4 ">
             <Button
-              className=" w-[7.5rem] bg-secondary dark:bg-primary border border-primary text-primary text-[1rem] hover:text-secondary dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
+              className=" w-[7.5rem] bg-secondary hover:bg-muted-foreground hover:text-background dark:bg-primary border border-muted-foreground text-primary text-[1rem]  dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
               onClick={() => setOpen(!open)}
             >
               more info
             </Button>
             <Button
-              className=" w-[7.5rem]  bg-secondary dark:bg-primary border border-primary text-primary text-[1rem] hover:text-secondary dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
+              className=" w-[7.5rem]  bg-secondary dark:bg-primary border border-muted-foreground text-primary text-[1rem] hover:bg-muted-foreground hover:text-background dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
               onClick={() => setOpen(!open)}
             >
               topics

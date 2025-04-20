@@ -3,7 +3,7 @@
 import { lazy, Suspense, use, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { Card } from "@/components/ui/card";
-
+import Nav from "@/components/ui/nav";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import ChatDrawer from "@/components/CahtDrawer";
@@ -64,6 +64,7 @@ export default function Page() {
           description={selectedPoint?.description || ""}
         />
       </Card>
+      <Nav />
     </>
   );
 }
