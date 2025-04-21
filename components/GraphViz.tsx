@@ -149,15 +149,22 @@ export default function GraphViz({
             scale = 3;
           }
           if (selectedPoint?.id === node?.id) {
-            color = "red";
+            color = "white";
             scale = 5;
+            obj.add(
+              new THREE.Mesh(
+                new THREE.SphereGeometry(scale, 16, 8),
+                new THREE.MeshNormalMaterial()
+              )
+            );
+          } else {
+            obj.add(
+              new THREE.Mesh(
+                new THREE.SphereGeometry(scale, 16, 8),
+                new THREE.MeshBasicMaterial({ color: "gray" })
+              )
+            );
           }
-          obj.add(
-            new THREE.Mesh(
-              new THREE.SphereGeometry(scale, 16, 8),
-              new THREE.MeshStandardMaterial({ color: color })
-            )
-          );
           const sprite = new SpriteText(String(node.name));
           sprite.color = color;
           // sprite.fontSize = 8;
@@ -172,7 +179,7 @@ export default function GraphViz({
         onNodeHover={handleNodeHover}
         linkThreeObjectExtend={true}
         onNodeClick={handleNodeClick}
-        enableNodeDrag={true}
+        // enableNodeDrag={true}
       />
       {/* <CameraControls makeDefault ref={cameraRef} /> */}
     </>
