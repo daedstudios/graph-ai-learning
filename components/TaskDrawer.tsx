@@ -20,17 +20,51 @@ type Props = {
   description: string;
 };
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
 const TaskDrawer = ({ topic, description }: Props) => {
   const [open, setOpen] = React.useState(false);
 
-  const { messages, input, handleInputChange, handleSubmit, error } = useChat({
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    error,
+    setData,
+    data,
+    setMessages,
+    setInput,
+    stop,
+  } = useChat({
     api: "/api/task",
   });
 
+  // Submit the chat automatically when the drawer opens
+  useEffect(() => {
+    if (open) {
+      setInput(`given topic is ${topic}`);
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (input === `given topic is ${topic}`) {
+      handleSubmit();
+    }
+  }, [input]);
+
   return (
-    <Drawer modal={false} open={open} onOpenChange={setOpen}>
+    <Drawer
+      modal={false}
+      open={open}
+      onOpenChange={setOpen}
+      onClose={() => {
+        console.log("close drawer");
+        console.log("data", data);
+        setData([]);
+        setMessages([]);
+        setInput("");
+        stop();
+      }}
+    >
       <DrawerTrigger asChild>
         <Button
           className=" w-[7.5rem] bg-secondary border-muted-foreground dark:bg-primary border  text-primary text-[1rem] hover:bg-muted-foreground hover:text-background dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
