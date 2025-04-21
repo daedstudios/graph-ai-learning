@@ -25,10 +25,45 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const ChatDrawer = ({ topic, description }: Props) => {
   const [open, setOpen] = React.useState(false);
 
-  const { messages, input, handleInputChange, handleSubmit, error } = useChat();
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    error,
+    setData,
+    data,
+    setMessages,
+    setInput,
+    stop,
+  } = useChat();
+
+  useEffect(() => {
+    if (open) {
+      setInput(`given topic is ${topic}`);
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (input === `given topic is ${topic}`) {
+      handleSubmit();
+    }
+  }, [input]);
 
   return (
-    <Drawer modal={false} open={open} onOpenChange={setOpen}>
+    <Drawer
+      modal={false}
+      open={open}
+      onOpenChange={setOpen}
+      onClose={() => {
+        console.log("close drawer");
+        console.log("data", data);
+        setData([]);
+        setMessages([]);
+        setInput("");
+        stop();
+      }}
+    >
       <DrawerTrigger asChild>
         <Button
           className="w-[7.5rem] bg-primary dark:bg-secondary  hover:bg-muted-foreground hover:text-background text-secondary text-[1rem] dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer"
