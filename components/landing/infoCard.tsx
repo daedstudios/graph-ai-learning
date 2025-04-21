@@ -28,7 +28,6 @@ export default function Info() {
               alt="visual"
               width={0}
               height={0}
-              sizes="100vw"
               className="w-full h-auto"
             />
 
