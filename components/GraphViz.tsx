@@ -76,6 +76,20 @@ export default function GraphViz({
     setHighlightLinks(highlightLinks);
   };
 
+  useEffect(() => {
+    if (fgRef.current) {
+      fgRef.current.cameraPosition(
+        {
+          x: 280,
+          y: 280,
+          z: 280,
+        }, // new position
+        { x: 0, y: 0, z: 0 }, // lookAt ({ x, y, z })
+        2000 // ms transition duration
+      );
+    }
+  }, [fgRef.current]);
+
   const handleNodeHover = (
     node: NodeObject | null,
     prevNode: NodeObject | null
@@ -129,10 +143,10 @@ export default function GraphViz({
         nodeThreeObject={(node: NodeObject) => {
           const obj = new THREE.Group();
           let color = "gray";
-          let scale = 3;
+          let scale = 2;
           if (highlightNodes.has(node)) {
             color = "white";
-            scale = 3.2;
+            scale = 3;
           }
           if (selectedPoint?.id === node?.id) {
             color = "red";
@@ -141,7 +155,7 @@ export default function GraphViz({
           obj.add(
             new THREE.Mesh(
               new THREE.SphereGeometry(scale, 16, 8),
-              new THREE.MeshBasicMaterial({ color: color })
+              new THREE.MeshStandardMaterial({ color: color })
             )
           );
           const sprite = new SpriteText(String(node.name));
