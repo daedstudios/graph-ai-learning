@@ -197,13 +197,6 @@ const links_data = {
         "Functional methods that process array data like map, filter, and reduce.\nCreates new arrays or values based on existing array content.\nEnables declarative, chainable data processing operations.",
     },
     {
-      id: "id29",
-      name: "Regular Expressions",
-      val: 1,
-      description:
-        "Pattern matching syntax for complex text processing.\nEnables powerful search, validation, and replacement operations.\nEssential for data validation and text manipulation.",
-    },
-    {
       id: "id30",
       name: "Array Loops",
       val: 1,
