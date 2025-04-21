@@ -18,13 +18,13 @@ import { useChat } from "@ai-sdk/react";
 type Props = {
   topic: string;
   description: string;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-const ChatDrawer = ({ topic, description }: Props) => {
-  const [open, setOpen] = React.useState(false);
-
+const ChatDrawer = ({ topic, description, open, setOpen }: Props) => {
   const {
     messages,
     input,

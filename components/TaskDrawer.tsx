@@ -18,10 +18,12 @@ import { useChat } from "@ai-sdk/react";
 type Props = {
   topic: string;
   description: string;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const TaskDrawer = ({ topic, description }: Props) => {
-  const [open, setOpen] = React.useState(false);
+const TaskDrawer = ({ topic, description, open, setOpen }: Props) => {
+  // const [open, setOpen] = React.useState(false);
 
   const {
     messages,

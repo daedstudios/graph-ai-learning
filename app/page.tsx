@@ -22,6 +22,9 @@ export default function Page() {
     { id: string | number; name: string; description: string } | undefined
   >(undefined);
 
+  const [chatOpen, setChatOpen] = useState(false);
+  const [taskOpen, setTaskOpen] = useState(false);
+
   useEffect(() => {
     console.log("selectedPoint changed:", selectedPoint);
   }, [selectedPoint]);
@@ -64,15 +67,23 @@ export default function Page() {
             <ChatDrawer
               topic={selectedPoint?.name || ""}
               description={selectedPoint?.description || ""}
+              open={chatOpen}
+              setOpen={setChatOpen}
             />
             <TaskDrawer
               topic={selectedPoint?.name || ""}
               description={selectedPoint?.description || ""}
+              open={taskOpen}
+              setOpen={setTaskOpen}
             />
           </div>
         </Card>
       )}
-      <Nav />
+      <Nav
+        selectedPoint={selectedPoint}
+        setChatOpen={setChatOpen}
+        setTaskOpen={setTaskOpen}
+      />
     </>
   );
 }
