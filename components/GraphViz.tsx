@@ -121,7 +121,7 @@ export default function GraphViz({
       <ForceGraph3D
         ref={fgRef}
         backgroundColor="black"
-        controlType="trackball"
+        controlType="orbit"
         graphData={links_data}
         linkDirectionalParticles={2}
         linkDirectionalParticleWidth={0.8}
