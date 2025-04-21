@@ -6,6 +6,8 @@ import R3fForceGraph, {
   LinkObject,
 } from "r3f-forcegraph";
 
+import ForceGraph3D from "react-force-graph-3d";
+
 import React, {
   useMemo,
   useState,
@@ -38,58 +40,13 @@ export default function GraphViz({
   selectedPoint,
   setSelectedPoint,
 }: GraphVizProps) {
-  const fgRef = useRef<GraphMethods | undefined>(undefined);
-  useFrame(() => fgRef.current?.tickFrame());
+  const fgRef = useRef<any>(null);
+  // useFrame(() => fgRef.current?.tickFrame());
 
   const cameraRef = useRef<any>(null);
   const [highlightNodes, setHighlightNodes] = useState(new Set());
   const [highlightLinks, setHighlightLinks] = useState(new Set());
   const [hoverNode, setHoverNode] = useState<NodeObject | null>(null);
-
-  const graphData = useMemo(() => genRandomTree(600, true), []);
-  const rootId = 0;
-
-  const nodesById = useMemo(() => {
-    const nodesById: Record<number | string, NodeObject> = Object.fromEntries(
-      graphData.nodes.map((node) => [node.id, node as NodeObject])
-    );
-
-    // link parent/children
-    graphData.nodes.forEach((node: NodeObject) => {
-      node.collapsed = node.id !== rootId;
-      node.childLinks = [];
-    });
-    graphData.links.forEach((link: LinkObject) => {
-      const sourceId =
-        typeof link.source === "object" ? link.source.id : link.source;
-      if (sourceId !== undefined && nodesById[sourceId]) {
-        nodesById[sourceId]?.childLinks?.push(link);
-      }
-    });
-
-    return nodesById;
-  }, [graphData]);
-
-  const getPrunedTree = useCallback(() => {
-    const visibleNodes = [];
-    const visibleLinks = [];
-    (function traverseTree(node = nodesById[rootId]) {
-      visibleNodes.push(node);
-      if (node.collapsed) return;
-      visibleLinks.push(...(node.childLinks || []));
-      (node.childLinks || [])
-        .map((link) =>
-          typeof link.target === "object"
-            ? link.target
-            : link.target !== undefined
-            ? nodesById[link.target]
-            : undefined
-        ) // get child node
-        .forEach(traverseTree);
-    })();
-
-    return { nodes: visibleNodes, links: visibleLinks };
-  }, [nodesById]);
 
   const handleNodeClick = useCallback((node: NodeObject) => {
     console.log("node", node);
@@ -100,11 +57,24 @@ export default function GraphViz({
         description: node.description,
       });
     }
-    // setPrunedTree(getPrunedTree());
-    cameraRef.current?.setLookAt(0, 0, 0, node.x, node.y, node.z, true);
-
-    const distance = 40;
+    const distance = 200;
+    const distRatio =
+      1 + distance / Math.hypot(node.x || 0, node.y || 0, node.z || 0);
+    fgRef.current.cameraPosition(
+      {
+        x: (node.x || 0) * distRatio,
+        y: (node.y || 0) * distRatio,
+        z: (node.z || 0) * distRatio,
+      }, // new position
+      node, // lookAt ({ x, y, z })
+      2000 // ms transition duration
+    );
   }, []);
+
+  const updateHighlight = () => {
+    setHighlightNodes(highlightNodes);
+    setHighlightLinks(highlightLinks);
+  };
 
   const handleNodeHover = (
     node: NodeObject | null,
@@ -128,6 +98,19 @@ export default function GraphViz({
     }
     setHoverNode(node);
   };
+  interface CanvasContext {
+    beginPath: () => void;
+    arc: (
+      x: number,
+      y: number,
+      radius: number,
+      startAngle: number,
+      endAngle: number,
+      counterclockwise?: boolean
+    ) => void;
+    fillStyle: string;
+    fill: () => void;
+  }
 
   useEffect(() => {
     console.log("highlightNodes", highlightNodes);
@@ -135,22 +118,25 @@ export default function GraphViz({
 
   return (
     <>
-      <R3fForceGraph
+      <ForceGraph3D
         ref={fgRef}
-        //   graphData={graphData}
+        backgroundColor="black"
+        controlType="trackball"
         graphData={links_data}
         linkDirectionalParticles={2}
         linkDirectionalParticleWidth={0.8}
-        nodeColor={(node) =>
-          !node.childLinks.length ? "green" : node.collapsed ? "red" : "yellow"
-        }
+        // nodeColor={(node) => "white"}
         nodeThreeObject={(node: NodeObject) => {
           const obj = new THREE.Group();
           let color = "gray";
           let scale = 3;
           if (highlightNodes.has(node)) {
             color = "white";
-            scale = 4;
+            scale = 3.2;
+          }
+          if (selectedPoint?.id === node?.id) {
+            color = "red";
+            scale = 5;
           }
           obj.add(
             new THREE.Mesh(
@@ -162,33 +148,20 @@ export default function GraphViz({
           sprite.color = color;
           // sprite.fontSize = 8;
           sprite.textHeight = scale * 2;
-          sprite.position.set(0, 8, 0); // Move text up 5 units in y-axis
+          sprite.position.set(0, scale * 2, 0);
           obj.add(sprite);
           return obj;
         }}
+        nodeLabel={(node: NodeObject) => {
+          return node.name;
+        }}
         onNodeHover={handleNodeHover}
-        // onNodeDragEnd={(node) => {
-        //   node.fx = node.x;
-        //   node.fy = node.y;
-        //   node.fz = node.z;
-        // }}
         linkThreeObjectExtend={true}
         onNodeClick={handleNodeClick}
-        // enableNodeDrag={true}
+        enableNodeDrag={true}
       />
-      <CameraControls makeDefault ref={cameraRef} />
+      {/* <CameraControls makeDefault ref={cameraRef} /> */}
     </>
   );
 }
 
-function genRandomTree(N = 300, reverse = false) {
-  return {
-    nodes: [...Array(N).keys()].map((i) => ({ id: i })),
-    links: [...Array(N).keys()]
-      .filter((id) => id)
-      .map((id) => ({
-        [reverse ? "target" : "source"]: id,
-        [reverse ? "source" : "target"]: Math.round(Math.random() * (id - 1)),
-      })),
-  };
-}

@@ -18,16 +18,16 @@ export default function GraphScene({
   setSelectedPoint,
 }: GraphSceneProps) {
   return (
-    <Canvas flat camera={{ position: [0, 0, 180], far: 5000 }}>
-      {/* <TrackballControls /> */}
-      <color attach="background" args={[0, 0, 0]} />
-      <ambientLight color={0xcccccc} intensity={Math.PI} />
-      <directionalLight intensity={0.6 * Math.PI} />
-      <OrbitControls />
-      <GraphViz
-        selectedPoint={selectedPoint}
-        setSelectedPoint={setSelectedPoint}
-      />
-    </Canvas>
+    // <Canvas flat camera={{ position: [0, 0, 180], far: 5000 }}>
+    //   {/* <TrackballControls /> */}
+    //   <color attach="background" args={[0, 0, 0]} />
+    //   <ambientLight color={0xcccccc} intensity={Math.PI} />
+    //   <directionalLight intensity={0.6 * Math.PI} />
+    //   <OrbitControls />
+    <GraphViz
+      selectedPoint={selectedPoint}
+      setSelectedPoint={setSelectedPoint}
+    />
+    // </Canvas>
   );
 }
