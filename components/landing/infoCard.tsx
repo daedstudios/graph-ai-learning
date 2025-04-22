@@ -22,7 +22,7 @@ export default function Info() {
 
   return (
     <>
-      <div className="flex flex-wrap gap-12 justify-center mx-auto max-w-[70rem] pt-[8rem] pb-[12rem] items-start cursor-pointer">
+      <div className="flex flex-wrap gap-12 justify-center mx-auto max-w-[70rem] pt-[6rem] pb-[12rem] items-start cursor-pointer">
         {info_data.map((item, index) => (
           <div
             key={index}
