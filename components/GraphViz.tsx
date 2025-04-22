@@ -87,6 +87,7 @@ export default function GraphViz({
         { x: 0, y: 0, z: 0 }, // lookAt ({ x, y, z })
         2000 // ms transition duration
       );
+      // fgRef.current.pauseAnimation();
     }
   }, [fgRef.current]);
 
@@ -112,19 +113,6 @@ export default function GraphViz({
     }
     setHoverNode(node);
   };
-  interface CanvasContext {
-    beginPath: () => void;
-    arc: (
-      x: number,
-      y: number,
-      radius: number,
-      startAngle: number,
-      endAngle: number,
-      counterclockwise?: boolean
-    ) => void;
-    fillStyle: string;
-    fill: () => void;
-  }
 
   useEffect(() => {
     console.log("highlightNodes", highlightNodes);
@@ -167,6 +155,7 @@ export default function GraphViz({
           }
           const sprite = new SpriteText(String(node.name));
           sprite.color = color;
+          sprite.fontFace = "arial";
           // sprite.fontSize = 8;
           sprite.textHeight = scale * 2;
           sprite.position.set(0, scale * 2, 0);
@@ -179,7 +168,7 @@ export default function GraphViz({
         onNodeHover={handleNodeHover}
         linkThreeObjectExtend={true}
         onNodeClick={handleNodeClick}
-        // enableNodeDrag={true}
+        enableNodeDrag={false}
       />
       {/* <CameraControls makeDefault ref={cameraRef} /> */}
     </>
