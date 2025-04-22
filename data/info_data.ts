@@ -1,14 +1,14 @@
 const info_data = [
   {
     heading: "Your knowledge visualized",
-    image: "feedback.png",
+    image: "viz.png",
     description:
       "Track your progress by seeing all related topics and find gaps in your current skill set.",
   },
 
   {
     heading: "find your own learning path",
-    image: "feedback.png",
+    image: "whileloops.png",
     description:
       "The entire learning process will be tailored to the users interests, strengths and understanding.",
   },
