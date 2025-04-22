@@ -52,7 +52,7 @@ export default function Page() {
 
       gsap.to(cardRef.current, {
         duration: 0.5,
-        width: isMobile ? "full" : "18rem",
+        width: isMobile ? "90vw" : "18rem",
         height: "auto",
         opacity: 1,
       });
