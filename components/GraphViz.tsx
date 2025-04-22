@@ -29,11 +29,15 @@ interface NodeObject extends BaseNodeObject {
 
 interface GraphVizProps {
   selectedPoint: any;
-  setSelectedPoint: (point: {
-    id: number | string;
-    name: string;
-    description: string;
-  }) => void;
+  setSelectedPoint: (
+    point:
+      | {
+          id: number | string;
+          name: string;
+          description: string;
+        }
+      | undefined
+  ) => void;
 }
 
 export default function GraphViz({
@@ -87,7 +91,6 @@ export default function GraphViz({
         { x: 0, y: 0, z: 0 }, // lookAt ({ x, y, z })
         2000 // ms transition duration
       );
-      // fgRef.current.pauseAnimation();
     }
   }, [fgRef.current]);
 
@@ -169,6 +172,10 @@ export default function GraphViz({
         linkThreeObjectExtend={true}
         onNodeClick={handleNodeClick}
         enableNodeDrag={false}
+        onBackgroundClick={() => {
+          setSelectedPoint(undefined);
+          setHoverNode(null);
+        }}
       />
       {/* <CameraControls makeDefault ref={cameraRef} /> */}
     </>

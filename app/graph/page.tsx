@@ -56,6 +56,13 @@ export default function Page() {
         height: "auto",
         opacity: 1,
       });
+    } else {
+      gsap.to(cardRef.current, {
+        duration: 0.5,
+        width: 0,
+        height: 0,
+        opacity: 0,
+      });
     }
   }, [selectedPoint]);
 
@@ -67,33 +74,33 @@ export default function Page() {
           setSelectedPoint={setSelectedPoint}
         />
       </div>
-      {selectedPoint?.name && (
-        <Card
-          className="fixed top-4 border border-muted-foreground  bg-background/8 md:top-6  left-1/2 -translate-x-1/2 w-[90%] md:left-24 md:translate-x-0 md:w-[18rem] p-4 rounded-[2rem]  flex flex-col items-start h-0 text-left overflow-hidden"
-          ref={cardRef}
-        >
-          <h1 className="text-[1rem] w-full text-background font-medium text-left">
-            {selectedPoint?.name}
-          </h1>
-          <p className="text-[1rem] text-background w-full pb-[0rem]">
-            {selectedPoint?.description}
-          </p>
-          <div className="flex flex-row w-full gap-4 justify-end ">
-            <ChatDrawer
-              topic={selectedPoint?.name || ""}
-              description={selectedPoint?.description || ""}
-              open={chatOpen}
-              setOpen={setChatOpen}
-            />
-            <TaskDrawer
-              topic={selectedPoint?.name || ""}
-              description={selectedPoint?.description || ""}
-              open={taskOpen}
-              setOpen={setTaskOpen}
-            />
-          </div>
-        </Card>
-      )}
+
+      <Card
+        className="fixed top-4 border border-muted-foreground  bg-background/8 md:top-6  left-1/2 -translate-x-1/2 w-[90%] md:left-24 md:translate-x-0 md:w-[18rem] p-4 rounded-[2rem]  flex flex-col items-start h-0 text-left overflow-hidden max-h-[22rem] opacity-0 "
+        ref={cardRef}
+      >
+        <h1 className="text-[1rem] w-full text-background font-medium text-left">
+          {selectedPoint?.name}
+        </h1>
+        <p className="text-[1rem] text-background w-full pb-[0rem]">
+          {selectedPoint?.description}
+        </p>
+        <div className="flex flex-row w-full gap-4 justify-end ">
+          <ChatDrawer
+            topic={selectedPoint?.name || ""}
+            description={selectedPoint?.description || ""}
+            open={chatOpen}
+            setOpen={setChatOpen}
+          />
+          <TaskDrawer
+            topic={selectedPoint?.name || ""}
+            description={selectedPoint?.description || ""}
+            open={taskOpen}
+            setOpen={setTaskOpen}
+          />
+        </div>
+      </Card>
+
       <Nav
         selectedPoint={selectedPoint}
         setChatOpen={setChatOpen}
