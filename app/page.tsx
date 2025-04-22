@@ -54,7 +54,7 @@ export default function Page() {
       </div>
       {selectedPoint?.name && (
         <Card
-          className="fixed bottom-24 bg-transparent md:bottom-3/5 left-1/2 -translate-x-1/2 w-[90%] md:left-24 md:translate-x-0 md:w-[18rem] p-4 rounded-[2rem]  flex flex-col items-start h-0 text-left overflow-hidden"
+          className="fixed top-4 bg-transparent md:top-6  left-1/2 -translate-x-1/2 w-[90%] md:left-24 md:translate-x-0 md:w-[18rem] p-4 rounded-[2rem]  flex flex-col items-start h-0 text-left overflow-hidden"
           ref={cardRef}
         >
           <h1 className="text-[1rem] w-full text-background font-medium text-left">
