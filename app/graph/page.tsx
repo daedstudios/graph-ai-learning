@@ -14,7 +14,22 @@ gsap.registerPlugin(useGSAP);
 // Dynamically import the component that uses React Three Fiber
 const Scene = dynamic(() => import("@/components/GraphScene"), {
   ssr: false,
-  loading: () => <div>Loading 3D Scene...</div>,
+  loading: () => (
+    <div className="w-screen h-screen bg-foreground text-background flex items-center justify-center text-4xl">
+      <div className="animate-pulse">
+        <span className="inline-block animate-bounce delay-75">L</span>
+        <span className="inline-block animate-bounce delay-100">o</span>
+        <span className="inline-block animate-bounce delay-150">a</span>
+        <span className="inline-block animate-bounce delay-200">d</span>
+        <span className="inline-block animate-bounce delay-300">i</span>
+        <span className="inline-block animate-bounce delay-300">n</span>
+        <span className="inline-block animate-bounce delay-300">g</span>
+        <span className="inline-block animate-bounce delay-300">.</span>
+        <span className="inline-block animate-bounce delay-400">.</span>
+        <span className="inline-block animate-bounce delay-500">.</span>
+      </div>
+    </div>
+  ),
 });
 
 export default function Page() {
