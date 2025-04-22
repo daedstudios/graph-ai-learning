@@ -9,6 +9,7 @@ import {
 } from "@react-three/drei";
 import * as THREE from "three";
 import BlobShader from "./ShaderBlob/ShaderWobbleMaterial";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -22,15 +23,19 @@ export default function Hero() {
           assist you in your personal learning journey
         </p>
         <div className="flex  flex-row w-full gap-4 justify-center ">
-          <Button className=" w-[7.5rem] bg-foreground hover:bg-muted-foreground hover:text-background dark:bg-primary border border-muted-foreground text-background text-[1rem]  dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer">
-            try now
-          </Button>
-          <Button className=" w-[7.5rem]  bg-secondary dark:bg-primary border border-muted-foreground text-primary text-[1rem] hover:bg-muted-foreground hover:text-background dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer">
-            github
-          </Button>
+          <Link href="/">
+            <Button className=" w-[7.5rem] bg-foreground hover:bg-muted-foreground hover:text-background dark:bg-primary border border-muted-foreground text-background text-[1rem]  dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer">
+              try now
+            </Button>
+          </Link>
+          <Link href="https://github.com/daedstudios/graph-ai-learning">
+            <Button className=" w-[7.5rem]  bg-secondary dark:bg-primary border border-muted-foreground text-primary text-[1rem] hover:bg-muted-foreground hover:text-background dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer">
+              github
+            </Button>
+          </Link>
         </div>
       </div>
-      <div className="h-[22rem] w-[22rem] mx-auto border mt-24">
+      <div className="w-[8rem] h-[8rem] md:h-[16rem] md:w-[16rem] mx-auto mt-[6rem]">
         <Canvas camera={{ position: [7, 7, 7], fov: 50 }}>
           <ambientLight intensity={2} />
           <pointLight position={[10, 10, 10]} />
