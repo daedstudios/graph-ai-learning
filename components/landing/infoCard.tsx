@@ -22,11 +22,11 @@ export default function Info() {
 
   return (
     <>
-      <div className="flex flex-wrap gap-12 justify-center mx-auto max-w-[70rem] pt-[6rem] pb-[12rem] items-start cursor-pointer">
+      <div className="flex flex-wrap gap-12 justify-center mx-auto max-w-[70rem] pt-[6rem] pb-[12rem] items-start">
         {info_data.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col p-[1.5rem] bg-background border justify-between border-muted w-[90%] md:w-[21rem] rounded-[2rem] h-[31rem]"
+            className="flex flex-col p-[1.5rem] bg-background border justify-between border-muted w-[90%] md:w-[21rem] rounded-[2rem] h-[31rem] cursor-pointer"
             onMouseOver={() => {
               gsap.to(imgRefs.current[index].current, {
                 duration: 0.2,
@@ -50,6 +50,19 @@ export default function Info() {
               gsap.to(ArrowRefs.current[index].current, {
                 duration: 0.2,
                 scale: 1,
+                ease: "power2.out",
+              });
+            }}
+            onClick={() => {
+              gsap.to(imgRefs.current[index].current, {
+                duration: 0.2,
+                scale: 1.1,
+                filter: "blur(0px)",
+                ease: "power2.out",
+              });
+              gsap.to(ArrowRefs.current[index].current, {
+                duration: 0.2,
+                scale: 1.5,
                 ease: "power2.out",
               });
             }}
