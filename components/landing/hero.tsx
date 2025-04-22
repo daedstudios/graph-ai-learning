@@ -1,5 +1,14 @@
-import React from "react";
+"use client";
+import React, { useRef } from "react";
 import { Button } from "../ui/button";
+import { Canvas, extend } from "@react-three/fiber";
+import {
+  MeshWobbleMaterial,
+  OrbitControls,
+  shaderMaterial,
+} from "@react-three/drei";
+import * as THREE from "three";
+import BlobShader from "./ShaderBlob/ShaderWobbleMaterial";
 
 export default function Hero() {
   return (
@@ -20,6 +29,14 @@ export default function Hero() {
             github
           </Button>
         </div>
+      </div>
+      <div className="h-[22rem] w-[22rem] mx-auto border mt-24">
+        <Canvas camera={{ position: [7, 7, 7], fov: 50 }}>
+          <ambientLight intensity={2} />
+          <pointLight position={[10, 10, 10]} />
+          {/* <OrbitControls /> */}
+          <BlobShader />
+        </Canvas>
       </div>
     </>
   );
