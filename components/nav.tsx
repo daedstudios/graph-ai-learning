@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, MessageSquare, Grid3X3 } from "lucide-react";
 import { Button } from "./ui/button";
+import Image from "next/image";
 
 type Props = {
   selectedPoint:
@@ -28,28 +29,34 @@ export default function Nav({
             <Button
               className={`flex flex-col items-center text-[1rem] h-auto bg-foreground text-foreground hover:bg-foreground shadow-none hover:text-muted-foreground transition cursor-pointer`}
             >
-              <Home className="text-background hover:text-muted-foreground" />
+              <Image
+                src="/graph_white.svg"
+                alt="logo"
+                width={0}
+                height={0}
+                className="w-[1.5rem] h-[1.5rem]"
+              ></Image>
               <span className="hidden md:block text-xs mt-1">home</span>
             </Button>
           </Link>
         </li>
         <li>
           <Button
-            className={`flex flex-col items-center text-[1rem] h-auto bg-foreground text-foreground hover:bg-foreground shadow-none hover:text-muted-foreground transition cursor-pointer`}
+            className={`flex flex-col items-center p-0 m-0 text-[1rem] h-auto bg-foreground md:mt-4 text-foreground hover:bg-foreground shadow-none hover:text-muted-foreground transition cursor-pointer`}
             disabled={!selectedPoint}
             onClick={() => setChatOpen((prev) => !prev)}
           >
-            <MessageSquare className="text-background" />
+            <MessageSquare className="text-background scale-150" />
             <span className="hidden md:block text-xs mt-1">chat</span>
           </Button>
         </li>{" "}
         <li>
           <Button
-            className={`flex flex-col items-center text-[1rem] h-auto bg-foreground text-foreground hover:bg-foreground shadow-none hover:text-muted-foreground transition cursor-pointer`}
+            className={`flex flex-col items-center p-0 m-0 text-[1rem] h-auto bg-foreground text-foreground hover:bg-foreground shadow-none hover:text-muted-foreground transition cursor-pointer`}
             disabled={!selectedPoint}
             onClick={() => setTaskOpen((prev) => !prev)}
           >
-            <Grid3X3 className="text-background" />
+            <Grid3X3 className="text-background scale-150" />
             <span className="hidden md:block text-xs mt-1">tasks</span>
           </Button>
         </li>
