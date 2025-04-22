@@ -23,12 +23,15 @@ export default function Hero() {
           assist you in your personal learning journey
         </p>
         <div className="flex  flex-row w-full gap-4 justify-center ">
-          <Link href="/">
+          <Link href="/graph">
             <Button className=" w-[7.5rem] bg-foreground hover:bg-muted-foreground hover:text-background dark:bg-primary border border-muted-foreground text-background text-[1rem]  dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer">
               try now
             </Button>
           </Link>
-          <Link href="https://github.com/daedstudios/graph-ai-learning">
+          <Link
+            href="https://github.com/daedstudios/graph-ai-learning"
+            target="_blank"
+          >
             <Button className=" w-[7.5rem]  bg-secondary dark:bg-primary border border-muted-foreground text-primary text-[1rem] hover:bg-muted-foreground hover:text-background dark:hover:bg-background dark:text-card-foreground rounded-[2rem] cursor-pointer">
               github
             </Button>
