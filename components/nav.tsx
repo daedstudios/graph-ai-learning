@@ -21,33 +21,35 @@ export default function Nav({
   const pathname = usePathname();
 
   return (
-    <nav className="fixed z-50 bottom-0 w-full md:top-0 md:left-0 md:h-screen md:w-auto bg-background">
-      <ul className="flex md:justify-start justify-between mx-auto w-[90%] md:px-4 items-center md:flex-col md:items-center h-full p-5 gap-6">
+    <nav className="fixed z-50 bottom-0 w-full md:top-0 md:left-0 md:h-screen md:w-auto bg-foreground">
+      <ul className="flex md:justify-start justify-between mx-auto w-[90%] md:px-2 items-center md:flex-col md:items-center h-full p-5 gap-6">
         <li>
-          <Button
-            className={`flex flex-col items-center text-[1rem] h-auto bg-background text-foreground hover:bg-background hover:shadow-2xl hover:text-foreground transition`}
-          >
-            <Home />
-            <span className="hidden md:block text-xs mt-1">home</span>
-          </Button>
+          <Link href="/landing">
+            <Button
+              className={`flex flex-col items-center text-[1rem] h-auto bg-foreground text-foreground hover:bg-foreground shadow-none hover:text-muted-foreground transition cursor-pointer`}
+            >
+              <Home className="text-background hover:text-muted-foreground" />
+              <span className="hidden md:block text-xs mt-1">home</span>
+            </Button>
+          </Link>
         </li>
         <li>
           <Button
-            className={`flex flex-col items-center text-[1rem] h-auto bg-background text-foreground hover:bg-background hover:shadow-2xl hover:text-foreground transition`}
+            className={`flex flex-col items-center text-[1rem] h-auto bg-foreground text-foreground hover:bg-foreground shadow-none hover:text-muted-foreground transition cursor-pointer`}
             disabled={!selectedPoint}
             onClick={() => setChatOpen((prev) => !prev)}
           >
-            <MessageSquare />
+            <MessageSquare className="text-background" />
             <span className="hidden md:block text-xs mt-1">chat</span>
           </Button>
         </li>{" "}
         <li>
           <Button
-            className={`flex flex-col items-center text-[1rem] h-auto bg-background text-foreground hover:bg-background hover:shadow-2xl hover:text-foreground transition`}
+            className={`flex flex-col items-center text-[1rem] h-auto bg-foreground text-foreground hover:bg-foreground shadow-none hover:text-muted-foreground transition cursor-pointer`}
             disabled={!selectedPoint}
             onClick={() => setTaskOpen((prev) => !prev)}
           >
-            <Grid3X3 />
+            <Grid3X3 className="text-background" />
             <span className="hidden md:block text-xs mt-1">tasks</span>
           </Button>
         </li>
